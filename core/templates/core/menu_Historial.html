@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block title %}Menu Historial{% endblock %}
+
+{% block content %}
+
+<!-- Mensaje -->
+<section class="page-section cta">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 mx-auto">
+        <div>
+          <div class="cta-inner text-center rounded">
+            <h2 class="section-heading mb-6" ><span class="section-heading-upper">Historial de ventas realizadas</span></h2>
+          </div>
+          <div class="col-xl-12 mx-auto">
+            <table class="table  table-success table-striped table-responsive-md">
+              <thead class="thead-dark">
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Codigo Venta</th>
+                      <th scope="col">Fecha de compra</th>
+                      <th scope="col">Productos</th>
+                      <th scope="col">Nombre Cliente</th>
+                      <th scope="col">Rut Cliente</th>
+                      <th scope="col" colspan="2">Opciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for vent in venta_historial %} {% comment %} este for no permite listar la base de datos {% endcomment %}
+                  <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{vent.codigo_venta}}</td>
+                      <td>{{vent.fecha_compra}}</td>
+                      <td>{{vent.productos}}</td>
+                      <td>{{vent.cliente.nombre}}</td>
+                      <td>{{vent.cliente_id}}</td>
+                      <td><a href="/datosClientes/{{c.rut}}"  class="btn btn-info">Editar</a></td> {% comment %} le definimos la edicion con el rut para poder identificarlo ya que es su clave primaria {% endcomment %}
+                      <td><a href="/eliminarCliente/{{c.rut}}" class="btn btn-danger btnEliminacion">Eliminar</a></td> {% comment %} lo mismo pero para eliminar {% endcomment %}
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+<!-- <div class="cta-inner text-center rounded">
+  <h2 class="section-heading mb-4">
+    <span class="section-heading-upper"><h1>Menú Historial</h1></span>
+  </h2>
+  <div class="col-xl-9 mx-auto">
+    <a class="nav-link text-uppercase text-expanded" href="{% url 'historial_Compra' %}">Historial compra</a>
+    <a class="nav-link text-uppercase text-expanded" href="{% url 'ultima_Compra' %}">Última compra</a>
+  </div>
+</div> -->

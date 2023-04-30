@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+
+<!-- Mensaje -->
+<section class="page-section cta">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 mx-auto">
+        <div class="cta-inner text-center rounded">
+          <h1 class="section-heading mb-4">
+            <span class="section-heading-upper">Control Supervisado</span>
+          </h1>
+          <p class="mb-0">Desarrollar servicios de excelencia junto a nuestros colaboradores y proveedores, para dar valor a nuestros ferreteros y sus clientes.</p>
+        </div>
+        <div>
+          <div class="cta-inner text-center rounded">
+            <h2 class="section-heading mb-6" ><span class="section-heading-upper">Ultima compra realizada por el cliente</span></h2>
+            {% if message %}
+              <ul>
+                {% for messages in message %}
+                    <li>{{ messages.0 }} {{ messages.1 }} {{ messages.2 }} {{ messages.3 }} {{ messages.4 }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="col-xl-12 mx-auto">
+            <table class="table  table-success table-striped table-responsive-md">
+              <thead class="thead-dark">
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Codigo Venta</th>
+                      <th scope="col">Fecha de compra</th>
+                      <th scope="col">Productos</th>
+                      <th scope="col">Nombre Cliente</th>
+                      <th scope="col">Rut Cliente</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for v in venta_list %} {% comment %} este for no permite listar la base de datos {% endcomment %}
+                  <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{v.codigo_venta}}</td>
+                      <td>{{v.fecha_compra}}</td>
+                      <td>{{v.productos}}</td>
+                      <td>{{v.cliente.nombre}}</td>
+                      <td>{{v.cliente_id}}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
