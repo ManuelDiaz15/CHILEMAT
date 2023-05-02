@@ -3,6 +3,7 @@ from .models import clientes, venta
 from django.contrib.auth.decorators import login_required # el login required, oculta las vistas y solo permite iniciar luego del login 
 from django.contrib.auth import logout # para el cerrar sesión
 from datetime import date
+from django.core.exceptions import ObjectDoesNotExist
 
 @login_required
 def home(request): #Funcion la cual se encarga de obtener datos la ultimas compras realizada por los clientes
@@ -50,14 +51,18 @@ def registrar_Cliente(request):
     return render(request, 'core/registrar_Cliente.html', {"clientes_list": Clientes_lists, "clientes_lista": Clientes_list})
 
 @login_required
-def registrarCliente(request): # registrar cliente función
-    rut = request.POST['txtRut'] 
+def registrarCliente(request):
+    rut = request.POST['txtRut']
     nombre = request.POST['txtNombre']
     direccion = request.POST['txtDireccion']
-    email = request.POST['txtEmail'] 
+    email = request.POST['txtEmail']
 
-    client = clientes.objects.create(
-        rut=rut, nombre=nombre, direccion=direccion, email= email) #se encarga de crear guardar los datos obtenidos
+    try: #Obtiene los clientes registrados y los compara con el rut ingresado si este es igual no lo almacena.
+        cliente = clientes.objects.get(rut=rut)
+    except ObjectDoesNotExist:
+        # Si no existe el cliente, lo crea.
+        cliente = clientes.objects.create(rut=rut, nombre=nombre, direccion=direccion, email=email)
+
     return redirect("/registrar_Cliente")
 
 @login_required
