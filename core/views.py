@@ -99,9 +99,10 @@ def prosesar_formulario_venta(request):
     cliente = clientes.objects.get(nombre = cliente_nombre)
     fecha_compra = request.POST['datefecha']
     productos = request.POST['txtProductos'] # traer el archivo de la imagen
-
-    vent = venta.objects.create(
-        codigo_venta=codigo_venta, cliente=cliente, fecha_compra=fecha_compra, productos= productos) #se encarga de crear guardar los datos obtenidos
+    try:
+        vent = venta.objects.get(codigo_venta=codigo_venta)
+    except ObjectDoesNotExist:
+        vent = venta.objects.create(codigo_venta=codigo_venta, cliente=cliente, fecha_compra=fecha_compra, productos= productos) #se encarga de crear guardar los datos obtenidos
     return redirect('/')
 
 @login_required
