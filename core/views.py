@@ -78,6 +78,13 @@ def editarcliente(request, rut): # redirecciona enviando el rut a la ventana cli
     return render(request, "core/editar_Cliente.html", {'client':cliente, "clientes_lista": Clientes_list}) 
 
 @login_required
+def editarVenta(request, codigo_venta): # redirecciona enviando el rut a la ventana cliente
+    ventaedit = venta.objects.get(codigo_venta=codigo_venta)
+    Clientes_list = clientes.objects.all() # esto es para cargar los datos de los clientes a la venta
+    return render(request, "core/editar_Venta.html", {'venta':ventaedit, "clientes_lista": Clientes_list}) 
+
+
+@login_required
 def guardarEdicion(request): # Guardar los datos del cliente
     rut = request.POST['txtRut']
     nombre = request.POST['txtNombre']

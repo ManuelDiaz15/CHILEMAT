@@ -37,8 +37,8 @@
                       <td>{{vent.productos}}</td>
                       <td>{{vent.cliente.nombre}}</td>
                       <td>{{vent.cliente_id}}</td>
-                      <td><a href="/datosClientes/{{c.rut}}"  class="btn btn-info">Editar</a></td> {% comment %} le definimos la edicion con el rut para poder identificarlo ya que es su clave primaria {% endcomment %}
-                      <td><a href="/eliminarCliente/{{c.rut}}" class="btn btn-danger btnEliminacion">Eliminar</a></td> {% comment %} lo mismo pero para eliminar {% endcomment %}
+                      <td><a href="/editarVenta/{{vent.codigo_venta}}"  class="btn btn-info">Editar</a></td> {% comment %} le definimos la edicion con el rut para poder identificarlo ya que es su clave primaria {% endcomment %}
+                      <td><a href="/eliminarVenta/{{vent.codigo_venta}}" class="btn btn-danger btnEliminacion">Eliminar</a></td> {% comment %} lo mismo pero para eliminar {% endcomment %}
                   </tr>
                   {% endfor %}
               </tbody>

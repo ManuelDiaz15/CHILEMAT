@@ -11,6 +11,7 @@ urlpatterns = [
     path('registrarCliente', views.registrarCliente, name="registrarCliente"), # Función registrar cliente
     path('eliminarCliente/<rut>/', views.eliminardatosclientes, name="eliminarCliente"), # Eliminar cliente
     path('datosClientes/<rut>', views.editarcliente, name="datosClientes"), # Vista editar cliente
+    path('editarVenta/<codigo_venta>', views.editarVenta, name="editarVenta"),
     path('guardarEdicion/', views.guardarEdicion, name="guardarEdicion"), # Función que almacena la edicion del cliente
     path('registrar_Cliente/', views.search_results, name="search_results"), # funcion de busqueda sacado de chatgpt
     path('guardarVenta/', views.prosesar_formulario_venta, name="guardarVenta"), # Funcion que almacena la venta
