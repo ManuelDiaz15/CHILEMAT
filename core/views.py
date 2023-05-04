@@ -114,8 +114,9 @@ def prosesar_formulario_venta(request):
 
 @login_required
 def search_results(request): # esto lo saco de chatgpt xD 
-    query = request.POST['query']
-    cliente = clientes.objects.filter(nombre__icontains=query)
+    query_nombre = request.POST['query_nombre']
+    query_rut = request.POST['query_rut']
+    cliente = clientes.objects.filter(nombre__icontains=query_nombre, rut__icontains=query_rut)
     return render(request, "core/registrar_Cliente.html", {'clientes_list': cliente})
 
 @login_required

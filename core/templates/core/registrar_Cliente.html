@@ -33,16 +33,28 @@
   </div>
   <hr class="col-xl-12">
   <div class="col-xl-12">
-    <form method="post" action="{% url 'search_results' %}">
+    <form method="post" class="form-inline" action="{% url 'search_results' %}" style="padding: 15px;">
       {% csrf_token %}
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" name="query" placeholder="Buscar...">
+      <div class="form-group mx-sm-3">
+        <input type="text" class="form-control" name="query_nombre" placeholder="Buscar por nombre cliente">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit">Buscar</button>
         </div>
       </div>
+      <div class="form-group mx-sm-3">
+        <input type="text" class="form-control" name="query_rut" placeholder="Buscar por nombre rut">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+        </div>
+      </div>
+      <div class="form-group mx-sm-3">
+        <!-- <input type="text" class="form-control" name="query_rut" placeholder="Buscar por nombre rut"> -->
+        <div class="input-group-append">
+          <button class="btn btn-secondary btn-sm" type="submit">Listar todos los clientes</button>
+        </div>
+      </div>
     </form>
-      <table class="table table-responsive-md">
+      <table class="table table-responsive">
           <thead class="thead-dark">
               <tr>
                   <th scope="col">#</th>
