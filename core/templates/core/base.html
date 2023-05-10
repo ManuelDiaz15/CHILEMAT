@@ -48,7 +48,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav mx-auto">
-            <a class="material-icons" style="font-size:48px;color:rgb(255, 255, 255)">add_alert</a>
+            <a class="material-icons" href="{% url 'Alerta' %}" style="font-size:48px;color:rgb(255, 255, 255) ">add_alert</a>
             <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}">
               <a class="nav-link text-uppercase text-expanded" href="{% url 'home' %}">Inicio</a>
             </li>

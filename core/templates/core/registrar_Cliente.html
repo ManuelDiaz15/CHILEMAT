@@ -36,7 +36,7 @@
     <form method="post" class="form-inline" onsubmit="return validarBuscadores()" action="{% url 'search_results' %}" style="padding: 15px;">
       {% csrf_token %}
       <h6 >Nombre Cliente </h6>
-      <div class="form-group mx-sm-3">
+      <div class="form-group mx-sm-3 ">
         <input type="text" class="form-control" name="query_nombre" placeholder="Nombre cliente">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit">Buscar</button>
@@ -49,18 +49,18 @@
           <button class="btn btn-outline-secondary" type="submit">Buscar</button>
         </div>
       </div>
-     
     </form>
-    <form method="post" class="form-inline" action="{% url 'search_results' %}" style="padding: 15px;">
-      {% csrf_token %}
-      <div class="form-group mx-sm-3">
-        <input type="hidden" class="form-control" name="query_nombre"> 
-        <input type="hidden" class="form-control" name="query_rut"> 
-        <div>
-          <button class="btn btn-secondary btn-sm" type="">Listar todos los clientes</button>
+
+    <div class="col-xl-12">
+      <form method="post" class="form-inline" action="{% url 'search_results' %}" style="padding: 15px;">
+        {% csrf_token %}
+        <div class="form-group mx-sm-3">
+          <input type="hidden" class="form-control" name="query_nombre"> 
+          <input type="hidden" class="form-control" name="query_rut"> 
         </div>
-      </div>
-    </form>
+        <button type="submit" class="btn btn-secondary btn-lg btn-block">Cargar Lista de Clientes</button>
+      </form>
+    </div>
     <table class="table table-responsive table-bordered">
           <thead class="thead-dark">
               <tr>
