@@ -26,7 +26,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Estilos -->
-    <link href="{% static 'core/css/alerta.css' %}" rel="stylesheet">
     <link href="{% static 'core/css/business-casual.css' %}" rel="stylesheet">
     <link href="{% static 'core/css/clean-ch.css' %}" rel="stylesheet">
 
@@ -49,7 +48,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav mx-auto">
-            <a class="material-icons" style="font-size:48px;color:rgb(255, 255, 255)" href="{% url 'Alerta' %}">add_alert</a>
+            <a class="material-icons" style="font-size:48px;color:rgb(255, 255, 255)">add_alert</a>
             <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}">
               <a class="nav-link text-uppercase text-expanded" href="{% url 'home' %}">Inicio</a>
             </li>
@@ -115,9 +114,6 @@
             </div>
         </div>
     </div>
-    <!-- </div>
-      <button class="button_alert">Mostrar Alerta</button>
-    </div> -->
 
     {% block content %} {% endblock %}
 
@@ -158,7 +154,7 @@
     <script src="{% static 'core/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'core/js/select.js' %}"></script>
-                              
+    <script src="{% static 'core/js/validaSpace.js' %}"></script>                    
     
     <!-- <script type="text/javascript">
       $(document).ready(function(){

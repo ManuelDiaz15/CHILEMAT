@@ -10,7 +10,7 @@
 <div class="container">
   <div class="row">
   <div class="col-xl-12">
-      <form action="{% url 'registrarCliente' %}" method="POST" > 
+      <form action="{% url 'registrarCliente' %}" onsubmit="return validarFormulario()" method="POST" > 
           {% csrf_token %}
           <div class="form-group">
               <label for="formGroupExampleInput">Rut Cliente</label>
@@ -33,16 +33,18 @@
   </div>
   <hr class="col-xl-12">
   <div class="col-xl-12">
-    <form method="post" class="form-inline" action="{% url 'search_results' %}" style="padding: 15px;">
+    <form method="post" class="form-inline" onsubmit="return validarBuscadores()" action="{% url 'search_results' %}" style="padding: 15px;">
       {% csrf_token %}
+      <h6 >Nombre Cliente </h6>
       <div class="form-group mx-sm-3">
-        <input type="text" class="form-control" name="query_nombre" placeholder="Buscar por nombre cliente">
+        <input type="text" class="form-control" name="query_nombre" placeholder="Nombre cliente">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit">Buscar</button>
         </div>
       </div>
+      <h6>Rut Cliente </h6>
       <div class="form-group mx-sm-3">
-        <input type="text" class="form-control" name="query_rut" placeholder="Buscar por nombre rut">
+        <input type="text" class="form-control" name="query_rut" placeholder="Rut Cliente">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit">Buscar</button>
         </div>
