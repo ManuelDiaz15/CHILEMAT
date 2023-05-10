@@ -7,7 +7,7 @@ function validarFormulario() {
 
     // Si alguno de los campos está vacío después de eliminar los espacios en blanco, muestra un mensaje de error y devuelve false para cancelar el envío del formulario.
     if (rut === "" || nombre === "" || direccion === "" || email === "") {
-        alert("Por favor, completa todos los campos.");
+        alert("Por favor, completa los campos.");
         return false;
     }
     // Si todos los campos tienen valores, devuelve true para enviar el formulario.
