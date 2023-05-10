@@ -49,14 +49,19 @@
           <button class="btn btn-outline-secondary" type="submit">Buscar</button>
         </div>
       </div>
+     
+    </form>
+    <form method="post" class="form-inline" action="{% url 'search_results' %}" style="padding: 15px;">
+      {% csrf_token %}
       <div class="form-group mx-sm-3">
-        <!-- <input type="text" class="form-control" name="query_rut" placeholder="Buscar por nombre rut"> -->
-        <div class="input-group-append">
-          <button class="btn btn-secondary btn-sm" type="submit">Listar todos los clientes</button>
+        <input type="hidden" class="form-control" name="query_nombre"> 
+        <input type="hidden" class="form-control" name="query_rut"> 
+        <div>
+          <button class="btn btn-secondary btn-sm" type="">Listar todos los clientes</button>
         </div>
       </div>
     </form>
-      <table class="table table-resposive">
+    <table class="table table-responsive table-bordered">
           <thead class="thead-dark">
               <tr>
                   <th scope="col">#</th>
@@ -87,6 +92,12 @@
 </div>
 </section>
 <style>
+
+table{
+  height: 300px;
+  width: 300px;
+  
+}
   table td:nth-child(2) {
     width: 133px;
   }
