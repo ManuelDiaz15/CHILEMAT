@@ -7,11 +7,28 @@
 {% block content %}
 <section class="page-section cta">
     <div class="container">
-        <div class="row">
-            <div class="col-xl-12 mx-auto">
-                <h1>CLIENTES EN FUGA</h1>
+      <div class="row">
+        <div class="col-xl-12 mx-auto">
+          <div class="cta-inner text-center rounded">
+            <h1 class="section-heading mb-4">
+              <span class="section-heading-upper">Control Supervisado</span>
+            </h1>
+            <p class="mb-0">Desarrollar servicios de excelencia junto a nuestros colaboradores y proveedores, para dar valor a nuestros ferreteros y sus clientes.</p>
+          </div>
+          <div>
+            <div class="cta-inner text-center rounded">
+              <h2 class="section-heading mb-6" ><span class="section-heading-upper">Ultima compra realizada por el cliente</span></h2>
+              {% if message %}
+                <ul>
+                  {% for messages in message %}
+                      <li>{{ messages.0 }} {{ messages.1 }} {{ messages.2 }} {{ messages.3 }} {{ messages.4 }}</li>
+                  {% endfor %}
+              </ul>
+              {% endif %}
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</section>
+  </section>
 {% endblock %}

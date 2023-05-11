@@ -129,6 +129,26 @@ def ultima_Compra(request):
 
 @login_required
 def Alerta(request):
-    return render(request, 'core/Alertas.html')
-
+    lista_venta = [] #Lista la cual es la úlitma compra de cada Cliente
+    Clientes = clientes.objects.all() #Llama a todos los clientes que se encuentra en models
+    #Esta lista se utiliza para la funcion en la cual te trae la ultima fecha de venta registrada del cliente
+    Clientes_list = clientes.objects.all() #Esto es para cargar los datos de los clientes a la venta 
+    today = date.today()
+    message = [] #Variable que almacena los mensajes de atraso de un cliente
+    #Ej "Han pasado",delta.days ," Días desde que el cliente", Clientes.nombre,"no a realizado una compra")) 
+    #Este for itera por cada cliente
+    for Clientes in Clientes:
+        if venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first() is None:
+            print("Cliente no posee Compras")
+        else:
+            ultima_fecha = venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first()
+            lista_venta.append(ultima_fecha)#Append inserta un dato en un arreglo, esto inserta la ultima compra realizada por el cliente
+            fecha_rgistrada = ultima_fecha.fecha_compra #Almacena solo la ultima fecha del cliente que se este recorriendo
+            delta = today - fecha_rgistrada
+            if delta.days >= 14:
+                message.append(("Han pasado",delta.days ," Días desde que el cliente", Clientes.nombre,"no a realizado una compra"))
+            else:
+                print("No han pasado 2 semanas") 
+    return render(request, 'core/Alertas.html', {"venta_list": lista_venta ,"clientes_lista": Clientes_list,'message': message})
+  
 
