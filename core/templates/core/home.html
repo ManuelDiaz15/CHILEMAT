@@ -18,16 +18,6 @@
           <p class="mb-0">Desarrollar servicios de excelencia junto a nuestros colaboradores y proveedores, para dar valor a nuestros ferreteros y sus clientes.</p>
         </div>
         <div>
-          <div class="cta-inner text-center rounded">
-            <h2 class="section-heading mb-6" ><span class="section-heading-upper">Ultima compra realizada por el cliente</span></h2>
-            {% if message %}
-              <ul>
-                {% for messages in message %}
-                    <li>{{ messages.0 }} {{ messages.1 }} {{ messages.2 }} {{ messages.3 }} {{ messages.4 }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-          </div>
           <div class="col-xl-12 mx-auto">
             <table class="table  table-success table-striped table-responsive-md">
               <thead class="thead-dark">
