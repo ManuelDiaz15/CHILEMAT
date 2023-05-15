@@ -48,7 +48,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav mx-auto">
-            <a class="material-icons" href="{% url 'Alerta' %}" style="font-size:48px;color:rgb(255, 255, 255) ">add_alert</a>
+            <div class="icon-container">
+              <a class="material-icons" href="{% url 'Alerta' %}" style="font-size:48px;color:rgb(255, 255, 255) ">add_alert</a>
+              <span id="counter">{{ contador }}</span>
+            </div>
+            <style>
+              .icon-container {
+                position: relative;
+                display: inline-block;
+              }
+
+              #counter {
+                position: absolute;
+                bottom: 4px;
+                right: 0;
+                background-color: red;
+                color: white;
+                border-radius: 100%;
+                padding: 4px;
+                font-size: 15px;
+              }
+            </style>
             <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}">
               <a class="nav-link text-uppercase text-expanded" href="{% url 'home' %}">Inicio</a>
             </li>
@@ -101,10 +121,24 @@
                             <label for="formGroupExampleInput2">Fecha</label>
                             <input type="date" class="form-control" id="datefecha" name="datefecha" required>
                         </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Productos</label>
-                            <textarea type="text" class="form-control" id="txtProductos" name="txtProductos" placeholder="Productos"></textarea>
-                        </div>
+                        <div class="form-group" style="padding: 20px; margin-bottom: 10px;">
+                          <div class="form-group row" id="producto1">
+                              <label for="producto1-select" class="col-3">Producto</label>
+                              <select name="producto1" id="producto1-select" class="form-control col-3">
+                                  {% for producto in productos %}
+                                      <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                                  {% endfor %}
+                              </select>
+                              <label for="cantidad1" class="col-3">Cantidad</label>
+                              <input type="number" name="cantidad1" id="cantidad1" class="form-control col-3">
+                              <div style="padding-top: 8px;">
+                              <button type="button" class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>
+                              
+                              </div>
+                          </div>
+                          <div id="productos-extra"></div>
+                      </div>
+                        <button type="button" class="btn btn-success" onclick="agregarProducto()">Agregar producto</button>
                         <button type="submit" class="btn btn-secondary btn-lg btn-block button_alert">Guardar Venta</button>
                     </form>
                 </div>
@@ -154,7 +188,41 @@
     <script src="{% static 'core/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'core/js/select.js' %}"></script>
-    <script src="{% static 'core/js/validaSpace.js' %}"></script>                    
+    <script src="{% static 'core/js/validaSpace.js' %}"></script> 
+    <script>
+      let contador = 1;
+
+function agregarProducto() {
+    contador++;
+    const div = document.createElement("div");
+    div.classList.add("form-group", "row");
+    div.setAttribute("id", `producto${contador}`);
+    div.innerHTML = `
+                <label for="producto${contador}-select" class="col-3">Producto </label>
+                <select name="producto${contador}" id="producto${contador}-select" class="form-control col-3">
+                    {% for producto in productos %}
+                        <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                    {% endfor %}
+                </select>
+                <label for="cantidad${contador}" class="col-3">Cantidad</label>
+                <input type="number" name="cantidad${contador}" id="cantidad${contador}" class="form-control col-3">
+                <button type="button" class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>
+            `;
+    const divProductos = document.getElementById("productos-extra");
+    divProductos.appendChild(div);
+}
+
+function eliminarProducto(boton) {
+    const divProducto = boton.parentNode;
+    divProducto.parentNode.removeChild(divProducto);
+}
+    </script>                   
+    
+    <!-- <script type="text/javascript">
+      $(document).ready(function(){
+        $('#txtCliente').select2();
+      });
+    </script> -->
   </body>
 
 </html>

@@ -15,8 +15,20 @@
           <div class="cta-inner text-center rounded">
             <h2 class="section-heading mb-6" ><span class="section-heading-upper">Historial de ventas realizadas</span></h2>
           </div>
+          <div>
+            <form method="post" class="form-inline" action="{% url 'Filtrar_fecha' %}" style="padding: 15px;"> <!-- onsubmit="return validarBuscadores()" -->
+              {% csrf_token %}
+              <h6 >Fecha de compra</h6>
+              <div class="form-group mx-sm-3 ">
+                <input type="date" class="form-control" name="query_fecha">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
+              </div>
+            </form>
+          </div>
           <div class="col-xl-12 mx-auto">
-            <table class="table  table-success table-striped table-responsive-md">
+            <table class="table  table-success table-striped table-responsive">
               <thead class="thead-dark">
                   <tr>
                       <th scope="col">#</th>
@@ -32,13 +44,19 @@
                   {% for vent in venta_historial %} {% comment %} este for no permite listar la base de datos {% endcomment %}
                   <tr>
                       <td>{{forloop.counter}}</td>
-                      <td>{{vent.codigo_venta}}</td>
-                      <td>{{vent.fecha_compra}}</td>
-                      <td>{{vent.productos}}</td>
-                      <td>{{vent.cliente.nombre}}</td>
-                      <td>{{vent.cliente_id}}</td>
-                      <td><a href="/editarVenta/{{vent.codigo_venta}}"  class="btn btn-info">Editar</a></td> {% comment %} le definimos la edicion con el rut para poder identificarlo ya que es su clave primaria {% endcomment %}
-                      <td><a href="/eliminarVenta/{{vent.codigo_venta}}" class="btn btn-danger btnEliminacion">Eliminar</a></td> {% comment %} lo mismo pero para eliminar {% endcomment %}
+                      <td>{{vent.venta.codigo_venta}}</td>
+                      <td>{{vent.venta.fecha_compra}}</td>
+                      <td>
+                        <ul>
+                          {% for detalle in vent.detalles %}
+                            <li>{{ detalle.producto }} ({{ detalle.cantidad }})</li>
+                          {% endfor %}
+                        </ul>
+                      </td>
+                      <td>{{vent.venta.cliente.nombre}}</td>
+                      <td>{{vent.venta.cliente_id}}</td>
+                      <td><a href="/editarVenta/{{vent.venta.codigo_venta}}"  class="btn btn-info">Editar</a></td> {% comment %} le definimos la edicion con el rut para poder identificarlo ya que es su clave primaria {% endcomment %}
+                      <td><a href="/eliminarVenta/{{vent.venta.codigo_venta}}" class="btn btn-danger btnEliminacion">Eliminar</a></td> {% comment %} lo mismo pero para eliminar {% endcomment %}
                   </tr>
                   {% endfor %}
               </tbody>
@@ -50,7 +68,10 @@
   </div>
 </section>
 <style>
+  table{
+    height: 700px;
   
+  }
   table td:nth-child(6) {
     width: 133px;
   }

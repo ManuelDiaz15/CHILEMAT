@@ -18,5 +18,9 @@ urlpatterns = [
     path('regsitrar_Venta', views.regsitrar_Venta, name="regsitrar_Venta"),
     path('ultima_Compra/', views.ultima_Compra, name="ultima_Compra"),
     path('Alerta', views.Alerta, name="Alerta"),
+    path('eliminarVenta/<codigo_venta>/', views.eliminarventa, name="eliminarVenta"),
+    path('guardarventaedit/', views.guardarEdicionventa, name="guardarventaedit"),
+    path('menu_Historial/', views.Filtrar_fecha, name="Filtrar_fecha")
+
 
 ]
