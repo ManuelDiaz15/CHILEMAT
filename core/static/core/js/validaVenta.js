@@ -1,4 +1,4 @@
-function validarFormulario() {
+function validarFormularioVenta() {
     // Validar el código de la factura
     var codigoFactura = document.getElementById('txtCodigo').value.trim();
     if (codigoFactura === '') {
