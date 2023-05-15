@@ -6,6 +6,7 @@ from datetime import date
 from django.core.exceptions import ObjectDoesNotExist
 
 
+
 @login_required
 def home(request): #Funcion la cual se encarga de obtener datos la ultimas compras realizada por los clientes
     icono_count = 0
@@ -49,7 +50,7 @@ def home(request): #Funcion la cual se encarga de obtener datos la ultimas compr
             'detalles': detalles_venta
         })
         """ detalles_ventas.sort(Venta.objects.order_by('-fecha_compra')) """
-    return render(request, 'core/home.html', {"venta_list": detalles_ventas ,"clientes_lista": Clientes_list,'message': message, 'productos': productos, "contador": icono_count})
+    return render(request, 'core/home.html', {"venta_list": detalles_ventas ,"clientes_lista": Clientes_list,'message': message,  "contador": icono_count, 'productos': productos})
 
 @login_required
 def salir(request): # cerrar sesion
@@ -58,7 +59,21 @@ def salir(request): # cerrar sesion
 
 @login_required#Eliminar en futuro
 def historial_Compra(request):
-    return render(request, 'core/historial_Compra.html')
+    icono_count = 0 # estro es para cargar el contador que esta en la alerta
+    Clientes = clientes.objects.all() # estro es para cargar el contador que esta en la alerta
+    today = date.today() # estro es para cargar el contador que esta en la alerta
+    for Clientes in Clientes: # estro es para cargar el contador que esta en la alerta
+        if Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first() is None:
+            print("Cliente no posee Compras")
+        else:
+            ultima_fecha = Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first()
+            fecha_rgistrada = ultima_fecha.fecha_compra #Almacena solo la ultima fecha del cliente que se este recorriendo
+            delta = today - fecha_rgistrada
+            if delta.days >= 14:
+                icono_count = icono_count + 1 
+            else:
+                icono_count = icono_count + 0
+    return render(request,'core/regsitrar_Venta.html',{"contador": icono_count})
 
 @login_required
 def menu_Historial(request):#Carga el historial general de las ventas
@@ -83,15 +98,43 @@ def menu_Historial(request):#Carga el historial general de las ventas
             'detalles': detalles_venta
         })
         
-        """ detalles_ventas.sort(Venta.objects.order_by('-fecha_compra')) """
-    return render(request, 'core/menu_Historial.html', {'productos': productos, "clientes_lista": Clientes_list, "venta_historial": detalles_ventas})
+    icono_count = 0 # estro es para cargar el contador que esta en la alerta
+    Clientes = clientes.objects.all() # estro es para cargar el contador que esta en la alerta
+    today = date.today() # estro es para cargar el contador que esta en la alerta
+    for Clientes in Clientes: # estro es para cargar el contador que esta en la alerta
+        if Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first() is None:
+            print("Cliente no posee Compras")
+        else:
+            ultima_fecha = Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first()
+            fecha_rgistrada = ultima_fecha.fecha_compra #Almacena solo la ultima fecha del cliente que se este recorriendo
+            delta = today - fecha_rgistrada
+            if delta.days >= 14:
+                icono_count = icono_count + 1 
+            else:
+                icono_count = icono_count + 0
+    return render(request, 'core/menu_Historial.html', {'productos': productos, "clientes_lista": Clientes_list, "venta_historial": detalles_ventas, "contador": icono_count})
 
 @login_required
 def registrar_Cliente(request):
     Clientes_lists = clientes.objects.all() # esto es para listar mediante orm
     Clientes_list = clientes.objects.all() # esto es para cargar los datos de los clientes a la venta
     productos = Producto.objects.all()
-    return render(request, 'core/registrar_Cliente.html', {'productos': productos, "clientes_list": Clientes_lists, "clientes_lista": Clientes_list})
+
+    icono_count = 0 # estro es para cargar el contador que esta en la alerta
+    Clientes = clientes.objects.all() # estro es para cargar el contador que esta en la alerta
+    today = date.today() # estro es para cargar el contador que esta en la alerta
+    for Clientes in Clientes: # estro es para cargar el contador que esta en la alerta
+        if Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first() is None:
+            print("Cliente no posee Compras")
+        else:
+            ultima_fecha = Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first()
+            fecha_rgistrada = ultima_fecha.fecha_compra #Almacena solo la ultima fecha del cliente que se este recorriendo
+            delta = today - fecha_rgistrada
+            if delta.days >= 14:
+                icono_count = icono_count + 1 
+            else:
+                icono_count = icono_count + 0
+    return render(request, 'core/registrar_Cliente.html', {'productos': productos, "clientes_list": Clientes_lists, "clientes_lista": Clientes_list,"contador": icono_count})
 
 @login_required
 def registrarCliente(request):
@@ -119,13 +162,43 @@ def eliminardatosclientes(request, rut): # Eliminar cliente
 def editarcliente(request, rut): # redirecciona enviando el rut a la ventana cliente
     cliente = clientes.objects.get(rut=rut)
     Clientes_list = clientes.objects.all() # esto es para cargar los datos de los clientes a la venta
-    return render(request, "core/editar_Cliente.html", {'client':cliente, "clientes_lista": Clientes_list}) 
+
+    icono_count = 0 # estro es para cargar el contador que esta en la alerta
+    Clientes = clientes.objects.all() # estro es para cargar el contador que esta en la alerta
+    today = date.today() # estro es para cargar el contador que esta en la alerta
+    for Clientes in Clientes: # estro es para cargar el contador que esta en la alerta
+        if Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first() is None:
+            print("Cliente no posee Compras")
+        else:
+            ultima_fecha = Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first()
+            fecha_rgistrada = ultima_fecha.fecha_compra #Almacena solo la ultima fecha del cliente que se este recorriendo
+            delta = today - fecha_rgistrada
+            if delta.days >= 14:
+                icono_count = icono_count + 1 
+            else:
+                icono_count = icono_count + 0
+    return render(request, "core/editar_Cliente.html", {'client':cliente, "clientes_lista": Clientes_list, "contador": icono_count}) 
 
 @login_required
 def editarVenta(request, codigo_venta): # redirecciona enviando el rut a la ventana cliente
     ventaedit = Venta.objects.get(codigo_venta=codigo_venta)
     Clientes_list = clientes.objects.all() # esto es para cargar los datos de los clientes a la venta
-    return render(request, "core/editar_Venta.html", {'venta':ventaedit, "clientes_lista": Clientes_list}) 
+
+    icono_count = 0 # estro es para cargar el contador que esta en la alerta
+    Clientes = clientes.objects.all() # estro es para cargar el contador que esta en la alerta
+    today = date.today() # estro es para cargar el contador que esta en la alerta
+    for Clientes in Clientes: # estro es para cargar el contador que esta en la alerta
+        if Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first() is None:
+            print("Cliente no posee Compras")
+        else:
+            ultima_fecha = Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first()
+            fecha_rgistrada = ultima_fecha.fecha_compra #Almacena solo la ultima fecha del cliente que se este recorriendo
+            delta = today - fecha_rgistrada
+            if delta.days >= 14:
+                icono_count = icono_count + 1 
+            else:
+                icono_count = icono_count + 0
+    return render(request, "core/editar_Venta.html", {'venta':ventaedit, "clientes_lista": Clientes_list, "contador": icono_count}) 
     
 @login_required
 def guardarEdicionventa(request): # Guardar los datos del cliente
@@ -227,7 +300,22 @@ def search_results(request): # esto lo saco de chatgpt xD
     query_nombre = request.POST['query_nombre']
     query_rut = request.POST['query_rut']
     cliente = clientes.objects.filter(nombre__icontains=query_nombre, rut__icontains=query_rut)
-    return render(request, "core/registrar_Cliente.html", {'productos': productos, 'clientes_list': cliente})
+
+    icono_count = 0 # estro es para cargar el contador que esta en la alerta
+    Clientes = clientes.objects.all() # estro es para cargar el contador que esta en la alerta
+    today = date.today() # estro es para cargar el contador que esta en la alerta
+    for Clientes in Clientes: # estro es para cargar el contador que esta en la alerta
+        if Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first() is None:
+            print("Cliente no posee Compras")
+        else:
+            ultima_fecha = Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first()
+            fecha_rgistrada = ultima_fecha.fecha_compra #Almacena solo la ultima fecha del cliente que se este recorriendo
+            delta = today - fecha_rgistrada
+            if delta.days >= 14:
+                icono_count = icono_count + 1 
+            else:
+                icono_count = icono_count + 0
+    return render(request, "core/registrar_Cliente.html", {'productos': productos, 'clientes_list': cliente,  "contador": icono_count})
 
 @login_required
 def regsitrar_Venta(request):
@@ -239,6 +327,7 @@ def ultima_Compra(request):
 
 @login_required
 def Alerta(request):
+    icono_count = 0
     productos = Producto.objects.all()
     lista_venta = [] #Lista la cual es la úlitma compra de cada Cliente
     Clientes = clientes.objects.all() #Llama a todos los clientes que se encuentra en models
@@ -258,10 +347,12 @@ def Alerta(request):
             delta = today - fecha_rgistrada
             if delta.days >= 14:
                 message.append(("Han pasado",delta.days ," Días desde que el cliente", Clientes.nombre,"no a realizado una compra"))
+                icono_count = icono_count + 1 
             else:
                 print("No han pasado 2 semanas") 
-    return render(request, 'core/Alertas.html', {'productos': productos, "venta_list": lista_venta ,"clientes_lista": Clientes_list,'message': message})
-  
+    message.sort(reverse=True)
+    return render(request, 'core/Alertas.html', {'productos': productos, "venta_list": lista_venta ,"clientes_lista": Clientes_list,'message': message, "contador": icono_count})
+
 
 
 
@@ -286,6 +377,20 @@ def Filtrar_fecha(request):
             'venta': venta,
             'detalles': detalles_venta
         })
+
+    icono_count = 0 # estro es para cargar el contador que esta en la alerta
+    Clientes = clientes.objects.all() # estro es para cargar el contador que esta en la alerta
+    today = date.today() # estro es para cargar el contador que esta en la alerta
+    for Clientes in Clientes: # estro es para cargar el contador que esta en la alerta
+        if Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first() is None:
+            print("Cliente no posee Compras")
+        else:
+            ultima_fecha = Venta.objects.filter(cliente = Clientes).order_by('-fecha_compra').first()
+            fecha_rgistrada = ultima_fecha.fecha_compra #Almacena solo la ultima fecha del cliente que se este recorriendo
+            delta = today - fecha_rgistrada
+            if delta.days >= 14:
+                icono_count = icono_count + 1 
+            else:
+                icono_count = icono_count + 0
         
-        """ detalles_ventas.sort(Venta.objects.order_by('-fecha_compra')) """
-    return render(request, 'core/menu_Historial.html', {'productos': productos, "clientes_lista": Clientes_list, "venta_historial": detalles_ventas})
+    return render(request, 'core/menu_Historial.html', {'productos': productos, "clientes_lista": Clientes_list, "venta_historial": detalles_ventas,  "contador": icono_count})

@@ -10,7 +10,7 @@
 <div class="container">
   <div class="row">
   <div class="col-xl-12">
-      <form action="{% url 'registrarCliente' %}" onsubmit="return validarFormulario()" method="POST" > 
+      <form action="{% url 'registrarCliente' %}" onsubmit="return validarFormularioRCliente()" method="POST" > 
           {% csrf_token %}
           <div class="form-group">
               <label for="formGroupExampleInput">Rut Cliente</label>
@@ -97,6 +97,24 @@
 </div>
 </div>
 </section>
+<script>
+  function validarFormularioRCliente() {
+    var rut = document.getElementById("txtRut").value;
+    var nombre = document.getElementById("txtNombre").value;
+    var direccion = document.getElementById("txtDireccion").value;
+    var email = document.getElementById("txtEmail").value;
+    var numero = document.getElementById("txtNumero").value;
+
+    if (rut.trim() === "" || nombre.trim() === "" || direccion.trim() === "" || email.trim() === "" || numero.trim() === "") {
+      alert("Por favor, complete todos los campos.");
+      return false; // Evita que se envíe el formulario
+    }
+
+    // Aqui falta ingresar la validación del Rut-Correo
+
+    return true; // Permite el envío del formulario
+  }
+</script>
 <style>
 
 table{
