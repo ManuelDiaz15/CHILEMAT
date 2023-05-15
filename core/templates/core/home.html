@@ -15,43 +15,45 @@
           <h1 class="section-heading mb-4">
             <span class="section-heading-upper">Control Supervisado</span>
           </h1>
-          <p class="mb-0">Desarrollar servicios de excelencia junto a nuestros colaboradores y proveedores, para dar valor a nuestros ferreteros y sus clientes.</p>
+          <p class="mb-0">Desarrollar servicios de excelencia junto a nuestros colaboradores y proveedores, para dar
+            valor a nuestros ferreteros y sus clientes.</p>
         </div>
         <div class="cta-inner text-center rounded">
-          <h2 class="section-heading mb-6"><span class="section-heading-upper">Última compra realizada por los clientes</span></h2>
+          <h2 class="section-heading mb-6"><span class="section-heading-upper">Última compra realizada por los
+              clientes</span></h2>
         </div>
         <div>
           <div class="col-xl-12 mx-auto">
             <table class="table table-success table-striped table-responsive">
               <thead class="thead-dark">
-                  <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Codigo Venta</th>
-                      <th scope="col">Fecha de compra</th>
-                      <th scope="col">Productos</th>
-                      <th scope="col">Nombre Cliente</th>
-                      <th scope="col">Rut Cliente</th>
-                  </tr>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Codigo Venta</th>
+                  <th scope="col">Fecha de compra</th>
+                  <th scope="col">Productos</th>
+                  <th scope="col">Nombre Cliente</th>
+                  <th scope="col">Rut Cliente</th>
+                </tr>
               </thead>
               <tbody>
-                  {% for v in venta_list %} {% comment %} este for no permite listar la base de datos {% endcomment %}
-                  <tr>
-                      <td>{{forloop.counter}}</td>
-                      <td>{{v.venta.codigo_venta}}</td>
-                      <td>{{v.venta.fecha_compra}}</td>
-                      <td>
-                        <ul>
-                          {% for detalle in v.detalles %}
-                            <li>{{ detalle.producto }} ({{ detalle.cantidad }})</li>
-                          {% endfor %}
-                        </ul>
-                      </td>
-                      <td>{{v.venta.cliente.nombre}}</td>
-                      <td>{{v.venta.cliente_id}}</td>
-                  </tr>
-                  {% endfor %}
+                {% for v in venta_list %} {% comment %} este for no permite listar la base de datos {% endcomment %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{v.venta.codigo_venta}}</td>
+                  <td>{{v.venta.fecha_compra}}</td>
+                  <td>
+                    <ul>
+                      {% for detalle in v.detalles %}
+                      <li>{{ detalle.producto }} ({{ detalle.cantidad }})</li>
+                      {% endfor %}
+                    </ul>
+                  </td>
+                  <td>{{v.venta.cliente.nombre}}</td>
+                  <td>{{v.venta.cliente_id}}</td>
+                </tr>
+                {% endfor %}
               </tbody>
-          </table>
+            </table>
           </div>
         </div>
       </div>
@@ -59,8 +61,12 @@
   </div>
 </section>
 <style>
-  table{
-    height: 650px;
+  table {
+    height: 600px;
+  }
+
+  table td:nth-child(4) {
+    width: 450px;
   }
 </style>
 {% endblock %}

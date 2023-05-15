@@ -1,152 +1,161 @@
 <!DOCTYPE html>
 <html lang="es">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>{% block title %}{% endblock %} | Chilemat</title>
+  <title>{% block title %}{% endblock %} | Chilemat</title>
 
-    {% load static %}
+  {% load static %}
 
-    <!-- Bootstrap -->
-    <link href="{% static 'core/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="{% static 'core/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <!-- Fuentes -->
-    <link href="{% static 'core/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+  <!-- Fuentes -->
+  <link href="{% static 'core/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!-- Estilos -->
-    <link href="{% static 'core/css/business-casual.css' %}" rel="stylesheet">
-    <link href="{% static 'core/css/clean-ch.css' %}" rel="stylesheet">
+  <!-- Estilos -->
+  <link href="{% static 'core/css/business-casual.css' %}" rel="stylesheet">
+  <link href="{% static 'core/css/clean-ch.css' %}" rel="stylesheet">
 
 </head>
 
-  </head>
+</head>
 
-  <body>
-    <div style="display: flex; justify-content: center; align-items: center;">
-      <img src=" {% static 'core/img/ch_mat.jpg' %}" style="width: 50%; height: auto;"> 
+<body>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <img src=" {% static 'core/img/ch_mat.jpg' %}" style="width: 50%; height: auto;">
+  </div>
+  <h1 class="site-heading text-center text-white d-none d-lg-block"> Control de ventas Mayoristas</h1>
+
+  <!-- Navegación -->
+  <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none"
+        href="{% url 'home' %}">CHILEMAT</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mx-auto">
+          <div class="icon-container">
+            <a class="material-icons" href="{% url 'Alerta' %}"
+              style="font-size:48px;color:rgb(255, 255, 255) ">add_alert</a>
+            <span id="counter">{{ contador }}</span>
+          </div>
+          <style>
+            .icon-container {
+              position: relative;
+              display: inline-block;
+            }
+
+            #counter {
+              position: absolute;
+              bottom: 4px;
+              right: 0;
+              background-color: red;
+              color: white;
+              border-radius: 100%;
+              padding: 4px;
+              font-size: 15px;
+            }
+          </style>
+          <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'home' %}">Inicio</a>
+          </li>
+          <li class="nav-item px-lg-4 {% if request.path == '/about/' %}active{% endif %}">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'menu_Historial' %}">Historial</a>
+          </li>
+          <li class="nav-item px-lg-4 {% if request.path == '/services/' %}active{% endif %}">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'registrar_Cliente' %}">Registrar Cliente</a>
+          </li>
+          <li class="nav-item px-lg-4 {% if request.path == '/store/' %}active{% endif %}">
+            <a class="nav-link text-uppercase text-expanded" data-toggle="modal" data-target="#myModal"
+              href="#">Registrar Venta</a>
+          </li>
+          <li class="nav-item px-lg-4 {% if request.path == '/store/' %}active{% endif %}">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'salir' %}">Cerrar Sesiòn</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <h1 class="site-heading text-center text-white d-none d-lg-block"> Control de ventas Mayoristas</h1>
+  </nav>
+  <div>
+    <div class="modal fade" id="myModal" role="dialog"> <!-- inicio del pop up -->
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="text-center">
+            <h1>Registro de venta</h1>
+          </div>
+          <div class="modal-body">
+            <form action="guardarVenta/" method="POST">
+              {% csrf_token %}
+              <div class="form-group"> <!-- codogo de la factura  -->
+                <label for="formGroupExampleInput">Codigo de la factura</label>
+                <input type="text" class="form-control" id="txtCodigo" name="txtCodigo" placeholder="Codigo factura"
+                  required>
+              </div>
+              <div class="form-group">
+                <label for="formGroupExampleInput2">Cliente</label>
+                <div id="miInput" style="display:none;">
+                  <input type="text" id="my-input">
+                </div>
 
-    <!-- Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="{% url 'home' %}">CHILEMAT</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav mx-auto">
-            <div class="icon-container">
-              <a class="material-icons" href="{% url 'Alerta' %}" style="font-size:48px;color:rgb(255, 255, 255) ">add_alert</a>
-              <span id="counter">{{ contador }}</span>
-            </div>
-            <style>
-              .icon-container {
-                position: relative;
-                display: inline-block;
-              }
+                <select data-live-search="true" id="my-select" name="txtCliente" required>
+                  <option value="" selected disabled hidden>Seleccione una opción</option>
+                  <option value="input">buscar cliente</option>
+                  {% for d in clientes_lista %}
+                  <option value="{{d}}">{{d}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="formGroupExampleInput2">Fecha</label>
+                <input type="date" class="form-control" id="datefecha" name="datefecha" required>
+              </div>
+              <div class="form-group" style="padding: 20px; margin-bottom: 10px;">
+                <div class="form-group row" id="producto1">
+                  <label for="producto1-select" class="col-3">Producto</label>
+                  <select name="producto1" id="producto1-select" class="form-control col-3">
+                    {% for producto in productos %}
+                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                    {% endfor %}
+                  </select>
+                  <label for="cantidad1" class="col-3">Cantidad</label>
+                  <input type="number" name="cantidad1" id="cantidad1" class="form-control col-3">
+                  <div style="padding-top: 8px;">
+                    <button type="button" class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>
 
-              #counter {
-                position: absolute;
-                bottom: 4px;
-                right: 0;
-                background-color: red;
-                color: white;
-                border-radius: 100%;
-                padding: 4px;
-                font-size: 15px;
-              }
-            </style>
-            <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'home' %}">Inicio</a>
-            </li>
-            <li class="nav-item px-lg-4 {% if request.path == '/about/' %}active{% endif %}">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'menu_Historial' %}">Historial</a>
-            </li>
-            <li class="nav-item px-lg-4 {% if request.path == '/services/' %}active{% endif %}">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'registrar_Cliente' %}">Registrar Cliente</a>
-            </li>
-            <li class="nav-item px-lg-4 {% if request.path == '/store/' %}active{% endif %}">
-              <a class="nav-link text-uppercase text-expanded" data-toggle="modal" data-target="#myModal" href="#">Registrar Venta</a>
-            </li>
-            <li class="nav-item px-lg-4 {% if request.path == '/store/' %}active{% endif %}">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'salir' %}">Cerrar Sesiòn</a>
-            </li>
-          </ul>
+                  </div>
+                </div>
+                <div id="productos-extra"></div>
+              </div>
+              <button type="button" class="btn btn-success" onclick="agregarProducto()">Agregar producto</button>
+              <button type="submit" class="btn btn-secondary btn-lg btn-block button_alert"
+                onclick="return validarFormulario()">Guardar Venta</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
         </div>
       </div>
-    </nav>
-    <div>
-      <div class="modal fade" id="myModal" role="dialog"> <!-- inicio del pop up -->
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="text-center">
-                    <h1>Registro de venta</h1>
-                </div>
-                <div class="modal-body">
-                    <form action="guardarVenta/" method="POST" > 
-                        {% csrf_token %}
-                        <div class="form-group"> <!-- codogo de la factura  -->
-                            <label for="formGroupExampleInput">Codigo de la factura</label>
-                            <input type="text" class="form-control" id="txtCodigo" name="txtCodigo" placeholder="Codigo factura" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Cliente</label>
-                            <div id="miInput" style="display:none;">
-                              <input type="text" id="my-input">
-                            </div>
-                            
-                            <select data-live-search="true" id="my-select" name="txtCliente" required>
-                                <option value="" selected disabled hidden>Seleccione una opción</option>
-                                <option value="input">buscar cliente</option>
-                                {% for d in clientes_lista %}
-                                <option value="{{d}}">{{d}}</option>
-                                {% endfor %}
-                            </select>
-                            </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Fecha</label>
-                            <input type="date" class="form-control" id="datefecha" name="datefecha" required>
-                        </div>
-                        <div class="form-group" style="padding: 20px; margin-bottom: 10px;">
-                          <div class="form-group row" id="producto1">
-                              <label for="producto1-select" class="col-3">Producto</label>
-                              <select name="producto1" id="producto1-select" class="form-control col-3">
-                                  {% for producto in productos %}
-                                      <option value="{{ producto.id }}">{{ producto.nombre }}</option>
-                                  {% endfor %}
-                              </select>
-                              <label for="cantidad1" class="col-3">Cantidad</label>
-                              <input type="number" name="cantidad1" id="cantidad1" class="form-control col-3">
-                              <div style="padding-top: 8px;">
-                              <button type="button" class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>
-                              
-                              </div>
-                          </div>
-                          <div id="productos-extra"></div>
-                      </div>
-                        <button type="button" class="btn btn-success" onclick="agregarProducto()">Agregar producto</button>
-                        <button type="submit" class="btn btn-secondary btn-lg btn-block button_alert">Guardar Venta</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     {% block content %} {% endblock %}
@@ -156,48 +165,92 @@
       <div class="container">
         <p class="m-0">
           {% if LINK_TWITTER %}
-            <a href="{{LINK_TWITTER}}" class="link">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
+          <a href="{{LINK_TWITTER}}" class="link">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
           {% endif %}
           {% if LINK_FACEBOOK %}
-            <a href="{{LINK_FACEBOOK}}" class="link">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
+          <a href="{{LINK_FACEBOOK}}" class="link">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
           {% endif %}
           {% if LINK_INSTAGRAM %}
-            <a href="{{LINK_INSTAGRAM}}" class="link">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
+          <a href="{{LINK_INSTAGRAM}}" class="link">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
           {% endif %}
         </p>
         <p class="m-0 mbt1">&copy; 2023 Chilemat.cl. Todos los derechos reservados. Chilemat SPA</p>
       </div>
-	  </footer>
+    </footer>
 
     <!-- Bootstrap -->
     <script src="{% static 'core/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'core/js/select.js' %}"></script>
-    <script src="{% static 'core/js/validaSpace.js' %}"></script> 
+    <script src="{% static 'core/js/validaSpace.js' %}"></script>
+    <script>
+      function validarFormulario() {
+        // Validar el código de la factura
+        var codigoFactura = document.getElementById('txtCodigo').value;
+        if (codigoFactura === '') {
+          alert('Por favor, ingrese el código de la factura.');
+          return false;
+        }
+
+        // Validar el cliente seleccionado
+        var clienteSeleccionado = document.getElementById('my-select').value;
+        if (clienteSeleccionado === '' || clienteSeleccionado === 'input') {
+          alert('Por favor, seleccione un cliente válido.');
+          return false;
+        }
+
+        // Validar la fecha
+        var fecha = document.getElementById('datefecha').value;
+        if (fecha === '') {
+          alert('Por favor, seleccione una fecha.');
+          return false;
+        }
+
+        // Validar al menos un producto agregado
+        var productos = document.querySelectorAll('[id^="producto"]');
+        if (productos.length === 0) {
+          alert('Por favor, agregue al menos un producto.');
+          return false;
+        }
+
+        // Validar la cantidad de cada producto
+        for (var i = 0; i < productos.length; i++) {
+          var cantidad = productos[i].querySelector('input[type="number"]').value;
+          if (cantidad === '' || cantidad <= 0) {
+            alert('Por favor, ingrese una cantidad válida para el producto.');
+            return false;
+          }
+        }
+
+        // Si todas las validaciones pasan, se envía el formulario
+        return true;
+      }
+
+    </script>
     <script>
       let contador = 1;
 
-function agregarProducto() {
-    contador++;
-    const div = document.createElement("div");
-    div.classList.add("form-group", "row");
-    div.setAttribute("id", `producto${contador}`);
-    div.innerHTML = `
+      function agregarProducto() {
+        contador++;
+        const div = document.createElement("div");
+        div.classList.add("form-group", "row");
+        div.setAttribute("id", `producto${contador}`);
+        div.innerHTML = `
                 <label for="producto${contador}-select" class="col-3">Producto </label>
                 <select name="producto${contador}" id="producto${contador}-select" class="form-control col-3">
                     {% for producto in productos %}
@@ -208,21 +261,21 @@ function agregarProducto() {
                 <input type="number" name="cantidad${contador}" id="cantidad${contador}" class="form-control col-3">
                 <button type="button" class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>
             `;
-    const divProductos = document.getElementById("productos-extra");
-    divProductos.appendChild(div);
-}
+        const divProductos = document.getElementById("productos-extra");
+        divProductos.appendChild(div);
+      }
 
-function eliminarProducto(boton) {
-    const divProducto = boton.parentNode;
-    divProducto.parentNode.removeChild(divProducto);
-}
-    </script>                   
-    
+      function eliminarProducto(boton) {
+        const divProducto = boton.parentNode;
+        divProducto.parentNode.removeChild(divProducto);
+      }
+    </script>
+
     <!-- <script type="text/javascript">
       $(document).ready(function(){
         $('#txtCliente').select2();
       });
     </script> -->
-  </body>
+</body>
 
 </html>
