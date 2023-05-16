@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required # el login required, o
 from django.contrib.auth import logout # para el cerrar sesión
 from datetime import date
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.shortcuts import render, get_object_or_404, redirect
+from .forms import VentaForm, DetalleVentaFormSet
 
 
 @login_required
@@ -181,8 +182,23 @@ def editarcliente(request, rut): # redirecciona enviando el rut a la ventana cli
 
 @login_required
 def editarVenta(request, codigo_venta): # redirecciona enviando el rut a la ventana cliente
-    ventaedit = Venta.objects.get(codigo_venta=codigo_venta)
+    venta = get_object_or_404(Venta, pk=codigo_venta)
+    
+    if request.method == 'POST':
+        form = VentaForm(request.POST, instance=venta)
+        formset = DetalleVentaFormSet(request.POST, instance=venta)
+        print(form.errors)
+        print(formset.errors)
+        if form.is_valid() and formset.is_valid():
+            form.save()
+            formset.save()
+            print("hola")
+            return redirect('/menu_Historial')
+    else:
+        form = VentaForm(instance=venta)
+        formset = DetalleVentaFormSet(instance=venta)
     Clientes_list = clientes.objects.all() # esto es para cargar los datos de los clientes a la venta
+    productos = Producto.objects.all()
 
     icono_count = 0 # estro es para cargar el contador que esta en la alerta
     Clientes = clientes.objects.all() # estro es para cargar el contador que esta en la alerta
@@ -198,7 +214,7 @@ def editarVenta(request, codigo_venta): # redirecciona enviando el rut a la vent
                 icono_count = icono_count + 1 
             else:
                 icono_count = icono_count + 0
-    return render(request, "core/editar_Venta.html", {'venta':ventaedit, "clientes_lista": Clientes_list, "contador": icono_count}) 
+    return render(request, "core/editar_Venta.html", {'productos': productos, "clientes_lista": Clientes_list, "contador": icono_count, 'form': form, 'formset': formset}) 
     
 @login_required
 def guardarEdicionventa(request): # Guardar los datos del cliente
@@ -211,6 +227,31 @@ def guardarEdicionventa(request): # Guardar los datos del cliente
     venta.codigo_venta = codigo_venta
     venta.cliente = cliente
     venta.fecha_compra = fecha_compra
+    venta.save() #se encarga de crear guardar los datos obtenidos
+        # Recorrer los datos del formulario para obtener los productos y sus cantidades
+    for key, value in request.POST.items():
+        if key.startswith('producto'):
+            # Obtener el ID del producto a partir del nombre del campo
+            producto_id = int(value)
+            producto = Producto.objects.get(pk=producto_id)
+
+            # Obtener la cantidad del producto a partir del nombre del campo
+            cantidad_key = key.replace('producto', 'cantidad')
+            cantidad = int(request.POST[cantidad_key])
+
+            # Crear nuevo detalle de venta
+            detalle_venta = DetalleVenta()
+            detalle_venta.venta = venta
+            detalle_venta.producto = producto
+            detalle_venta.cantidad = cantidad
+            detalle_venta.precio_unitario = producto.precio
+            detalle_venta.subtotal = detalle_venta.precio_unitario * detalle_venta.cantidad
+            detalle_venta.save()
+
+            # Actualizar el total de la venta
+            venta.total += detalle_venta.subtotal
+
+    # Guardar la venta con el total actualizado
     venta.save()
 
     return redirect('/menu_Historial')

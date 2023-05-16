@@ -20,7 +20,8 @@ urlpatterns = [
     path('Alerta', views.Alerta, name="Alerta"),
     path('eliminarVenta/<codigo_venta>/', views.eliminarventa, name="eliminarVenta"),
     path('guardarventaedit/', views.guardarEdicionventa, name="guardarventaedit"),
-    path('menu_Historial/', views.Filtrar_fecha, name="Filtrar_fecha")
+    path('menu_Historial/', views.Filtrar_fecha, name="Filtrar_fecha"),
+    path('Historial_compra/', views.historial_Compra, name="historialcompra")
 
 
 ]

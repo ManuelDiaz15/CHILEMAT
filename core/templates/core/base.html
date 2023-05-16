@@ -227,8 +227,17 @@
     
     <script>
       let contador = 1;
-
+    
       function agregarProducto() {
+        const productoInput = document.getElementById(`producto${contador}-select`);
+        const cantidadInput = document.getElementById(`cantidad${contador}`);
+    
+        // Verificar que los campos no estén vacíos
+        if (productoInput.value.trim() === '' || cantidadInput.value.trim() === '') {
+          alert('Debes ingresar un producto y una cantidad antes de agregar.');
+          return;
+        }
+    
         contador++;
         const div = document.createElement("div");
         div.classList.add("form-group", "row");
@@ -247,12 +256,14 @@
         const divProductos = document.getElementById("productos-extra");
         divProductos.appendChild(div);
       }
-
+    
       function eliminarProducto(boton) {
         const divProducto = boton.parentNode;
         divProducto.parentNode.removeChild(divProducto);
       }
     </script>
+    
+    
 
     <!-- <script type="text/javascript">
       $(document).ready(function(){

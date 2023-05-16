@@ -15,6 +15,9 @@ class clientes(models.Model): # creamos la base de datos con sus atributos
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
+    def __str__(self): #el metodo __str__ es un metodo de python que nos permite mostrar que listar de la base de datos
+        texto = "{0}"
+        return texto.format(self.nombre)
     
 class Venta(models.Model):
     codigo_venta = models.CharField(primary_key=True, max_length=50)
