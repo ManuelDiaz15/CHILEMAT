@@ -96,10 +96,10 @@
     </div>
   </nav>
   <div>
-    <div class="modal fade" id="myModal" role="dialog" style="width: 85%;"  > <!-- inicio del pop up -->
+    <div class="modal fade" id="myModal" role="dialog" style="width: 100%;"  > <!-- inicio del pop up -->
       <div class="modal-dialog">
         <!-- Modal content-->
-        <div class="modal-content" style="width: 166%;" >
+        <div class="modal-content">
           <div class="text-center">
             <h1>Registro de venta</h1>
           </div>
@@ -140,15 +140,15 @@
                   <label for="cantidad1" class="col-3">Cantidad</label>
                   <input type="number" name="cantidad1" id="cantidad1" class="form-control col-3.5">
                   <div style="padding-top: 8px;">
-                    <button type="button" class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>
-
                   </div>
                 </div>
                 <div id="productos-extra"></div>
               </div>
-              <button type="button" class="btn btn-success" onclick="agregarProducto()">Agregar producto</button>
-              <button type="submit" class="btn btn-secondary btn-lg btn-block button_alert"
-                onclick="return validarFormularioVenta()">Guardar Venta</button>
+              <button type="button" class="btn btn-success btn-class" onclick="agregarProducto()">Agregar producto</button>
+              <div class="btn-class" >
+                <button type="submit" class="btn btn-secondary btn-lg btn-block button_alert" onclick="return validarFormularioVenta()">Guardar Venta</button>
+              </div>
+           
             </form>
           </div>
           <div class="modal-footer">
@@ -212,6 +212,10 @@
         appearance: none;
         background-color: #fff;
       }
+      .btn-class{
+        margin: 10px auto;
+        width: 100%;
+      }
     </style>
     <!-- Bootstrap -->
     <script src="{% static 'core/vendor/jquery/jquery.min.js' %}"></script>
@@ -238,7 +242,7 @@
           </select>
           <label for="cantidad${contador}" class="col-3">Cantidad</label>
           <input type="number" name="cantidad${contador}" id="cantidad${contador}" class="form-control col-3.5">
-          <button type="button" class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>
+          <button type="button" class="btn btn-danger btn-class" onclick="eliminarProducto(this)">Eliminar</button>
       `;
         const divProductos = document.getElementById("productos-extra");
         divProductos.appendChild(div);
