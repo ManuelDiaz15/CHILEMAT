@@ -19,11 +19,11 @@
                 <div class="cta-inner1 text-center rounded">
                     <h6 class="section-heading mb-4">
                         <span class="section-heading-upper">Importante</span>
-                        <p class="mb-0">Los campos "Código de Venta", "cliente" y "fecha de compra" están vinculados,
-                            por lo tanto, no se pueden editar.</p>
+                        <p class="mb-0">Los campos "Código de Venta", "cliente" y "fecha de compra" están vinculados, por lo tanto, no se pueden editar.</p>
+                        <p class="mb-0">SE INSERTARON TRES NUEVOS CAMPOS PARA AGREGAR MÁS PRODUCTOS.</p>
                     </h6>
                 </div>
-                <div class="container">
+                <div class="">
                     <form method="POST" class="form">
                         {% csrf_token %}
                         <table class="text-center" style="padding: 1rem; margin: 0.5rem;">
@@ -51,24 +51,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{ formset.management_form }}
+                                    <div class="row">
+                                        {% for form in formset.forms %}
+                                        <div class="col-xs-12 col-md-6">
+                                            <div class="form-group">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        {{ form.as_table }}
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
                                 </td>
                             </tr>
                         </table>
-                        {{ formset.management_form }}
-                        <div class="row">
-                            {% for form in formset.forms %}
-                            <div class="col-xs-12 col-md-6">
-                                <div class="form-group">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            {{ form.as_table }}
-                                        </table>
 
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
                         <button type="submit" class="btn btn-secondary btn-lg btn-block">Guardar cambios</button>
                     </form>
                 </div>
@@ -111,7 +111,7 @@
     // programar la ocultación después de 10 segundos
     setTimeout(function () {
         div.style.display = 'none';
-    }, 10000);
+    }, 15000);
 </script>
 
 
