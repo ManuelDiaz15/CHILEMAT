@@ -76,9 +76,13 @@ WSGI_APPLICATION = 'registro_Chilemat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'registro_Chilemat.db',
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'jeremmy.mysql.pythonanywhere-services.com',
+        'USER': 'jeremmy',
+        'PASSWORD': 'kigamer12345',
+        'NAME': 'cpeit$default',
+        'CHARSET': 'utf8',
+    },
 }
 
 
