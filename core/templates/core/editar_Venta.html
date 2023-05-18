@@ -9,8 +9,20 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div class="text-center">
-                    <h1>Editar Venta</h1>
+                <table class="text-center" style="padding: 1rem; margin: 0.5rem;">
+                    <tr>
+                        <td>
+                            <h1>EDITAR VENTA</h1>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="cta-inner1 text-center rounded">
+                    <h6 class="section-heading mb-4">
+                        <span class="section-heading-upper">Importante</span>
+                        <p class="mb-0">Los campos "Código de Venta", "cliente" y "fecha de compra" están vinculados,
+                            por lo tanto, no se pueden editar.</p>
+                    </h6>
                 </div>
                 <div class="container">
                     <form method="POST" class="form">
@@ -46,7 +58,7 @@
                                         <table class="table">
                                             {{ form.as_table }}
                                         </table>
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -60,6 +72,13 @@
         </div>
     </div>
 </section>
+<style>
+    .cta-inner1 {
+        position: relative;
+        margin: 2%;
+        background-color: rgba(215, 247, 140, 0.85);
+    }
+</style>
 <script>
     var clienteField = document.getElementById("id_cliente");
     clienteField.readOnly = true;
@@ -68,8 +87,17 @@
 <script>
     document.getElementById("id_fecha_compra").readOnly = true;
 </script>
+<script>
+    // seleccionar el div que deseas ocultar
+    const div = document.querySelector('.cta-inner1');
 
-  
+    // programar la ocultación después de 10 segundos
+    setTimeout(function () {
+        div.style.display = 'none';
+    }, 10000);
+</script>
+
+
 
 
 {% endblock %}
