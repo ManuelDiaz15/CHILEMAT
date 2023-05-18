@@ -9,36 +9,48 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-
-                <h1>Editar Venta</h1>
+                <div class="text-center">
+                    <h1>Editar Venta</h1>
+                </div>
                 <div class="container">
                     <form method="POST" class="form">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="{{ form.codigo_venta.id_for_label }}">Código de Venta</label>
-                            <input type="text" id="{{ form.codigo_venta.id_for_label }}" name="{{ form.codigo_venta.html_name }}" value="{{ form.codigo_venta.value }}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="{{ form.cliente.id_for_label }}">Cliente</label>
-                            {{ form.cliente }}
-                        </div>
-                        <div class="form-group">
-                            <label for="{{ form.fecha_compra.id_for_label }}">Fecha de Compra</label>
-                            {{ form.fecha_compra }}
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="{{ form.codigo_venta.id_for_label }}">Código de Venta</label>
+                                    <input type="text" id="{{ form.codigo_venta.id_for_label }}"
+                                        name="{{ form.codigo_venta.html_name }}" value="{{ form.codigo_venta.value }}"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="{{ form.cliente.id_for_label }}">Cliente</label>
+                                    {{ form.cliente }}
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="{{ form.fecha_compra.id_for_label }}">Fecha de Compra</label>
+                                    {{ form.fecha_compra }}
+                                </div>
+                            </div>
                         </div>
                         {{ formset.management_form }}
                         {% for form in formset.forms %}
-
                         <div class="row">
-                            <div class="form-group">
-                                {{ form.as_table }}
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    {{ form.as_table }}
+                                </div>
                             </div>
-
                         </div>
                         {% endfor %}
                         <button type="submit" class="btn btn-secondary btn-lg btn-block">Guardar cambios</button>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
@@ -49,33 +61,9 @@
     clienteField.style.pointerEvents = "none";
 </script>
 <script>
-let contadorr = 1;
+    document.getElementById("id_fecha_compra").readOnly = true;
+</script>
 
-function agregarProductosxd() {
-contadorr++;
-const divs = document.createElement("div");
-divs.classList.add("form-group", "row");
-divs.setAttribute("id", `producto${contadorr}`);
-divs.innerHTML = `
-            <label for="producto${contadorr}-select" class="col-3">Producto </label>
-            <select name="producto${contadorr}" id="producto${contadorr}-select" class="form-control col-3">
-                {% for producto in productos %}
-                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
-                {% endfor %}
-            </select>
-            <label for="cantidad${contadorr}" class="col-3">Cantidad</label>
-            <input type="number" name="cantidad${contadorr}" id="cantidad${contadorr}" class="form-control col-3">
-            <button type="button" class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>
-        `;
-const divsProductos = document.getElementById("productos-extraa");
-divsProductos.appendChild(divs);
-}
-
-function eliminarProductosxd(botonn) {
-const divsProducto = botonn.parentNode;
-divsProducto.parentNode.removeChild(divsProducto);
-}
-</script>    
 
 
 {% endblock %}
