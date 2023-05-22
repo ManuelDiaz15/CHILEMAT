@@ -104,7 +104,7 @@
             <h1>Registro de venta</h1>
           </div>
           <div class="modal-body">
-            <form action="guardarVenta/" method="POST">
+            <form id="Form_venta" action="guardarVenta/" method="POST">
               {% csrf_token %}
               <div class="form-group"> <!-- Codigo de la factura  -->
                 <label for="formGroupExampleInput">Codigo de la factura</label>
@@ -231,59 +231,67 @@
     <script src="{% static 'core/js/xlsx.js' %}"></script>
     <script>
       function descargarExcel() {
-        // Obtener los datos del formulario
-        const formData = new FormData(document.querySelector('form'));
-        const data = Object.fromEntries(formData.entries());
+        // ontener el formulario
+        event.preventDefault(); // Evita que se envíe el formulario por defecto
+        var form = document.getElementById('Form_venta');
+        if (form.checkValidity()) {
+          // Obtener los datos del formulario
+          const formData = new FormData(document.querySelector('form'));
+          const data = Object.fromEntries(formData.entries());
 
-        // Extraer los datos relevantes
-        const codigoFactura = data.txtCodigo;
-        const cliente = document.querySelector('select[name="txtCliente"]').value;
-        const fecha = data.datefecha;
+          // Extraer los datos relevantes
+          const codigoFactura = data.txtCodigo;
+          const cliente = document.querySelector('select[name="txtCliente"]').value;
+          const fecha = data.datefecha;
 
-        // Crear el objeto workbook
-        const workbook = XLSX.utils.book_new();
+          // Crear el objeto workbook
+          const workbook = XLSX.utils.book_new();
 
-        // Crear el worksheet y asignar formato
-        const worksheet = XLSX.utils.aoa_to_sheet([
-          ["PLASTICOS EUROPLAST LTDA."],
-          ["RUT 79506670-5"],
-          ["Órden de compra  :", codigoFactura],
-          ["Fecha de pedido", fecha],
-          [],
-          ["No.", "DESCRIPCION", "CANTIDAD", "PRECIO UNITARIO", "PRECIO TOTAL"]
-        ]);
-        worksheet["!cols"] = [
-          { width: 25 }, // Columna A (A1)
-          { width: 52 },
-          { width: 9 },
-          { width: 15.70},
-          { width: 13 }     // Columna B (B1)
-        ];
-        // Combinar y centrar las celdas desde A1 hasta E1
-        worksheet["A1"].s = { alignment: { horizontal: "center" } };
-        worksheet["A1"].t = "s"; // Establecer el tipo de datos de la celda como string
-        worksheet["!merges"] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 4 } }]; // A1:E1
+          // Crear el worksheet y asignar formato
+          const worksheet = XLSX.utils.aoa_to_sheet([
+            ["PLASTICOS EUROPLAST LTDA."],
+            ["RUT 79506670-5"],
+            ["Órden de compra  :", codigoFactura],
+            ["Fecha de pedido", fecha],
+            [],
+            ["No.", "DESCRIPCION", "CANTIDAD", "PRECIO UNITARIO", "PRECIO TOTAL"]
+          ]);
+          worksheet["!cols"] = [
+            { width: 25 }, // Columna A (A1)
+            { width: 52 },
+            { width: 9 },
+            { width: 15.70},
+            { width: 13 }     // Columna B (B1)
+          ];
+          // Combinar y centrar las celdas desde A1 hasta E1
+          worksheet["A1"].s = { alignment: { horizontal: "center" } };
+          worksheet["A1"].t = "s"; // Establecer el tipo de datos de la celda como string
+          worksheet["!merges"] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 4 } }]; // A1:E1
 
 
 
-        // Obtener los nombres y cantidades de los productos seleccionados
-        const productosSeleccionados = document.querySelectorAll('select[name^="producto"]');
-        const cantidadesProductos = Array.from(document.querySelectorAll('input[name^="cantidad"]')).map(input => parseInt(input.value));
-        const nombresProductos = Array.from(productosSeleccionados).map(select => select.options[select.selectedIndex].text);
+          // Obtener los nombres y cantidades de los productos seleccionados
+          const productosSeleccionados = document.querySelectorAll('select[name^="producto"]');
+          const cantidadesProductos = Array.from(document.querySelectorAll('input[name^="cantidad"]')).map(input => parseInt(input.value));
+          const nombresProductos = Array.from(productosSeleccionados).map(select => select.options[select.selectedIndex].text);
 
-        // Crear un arreglo con los datos de los productos
-        const datosProductos = nombresProductos.map((nombre, index) => [index + 1, nombre, cantidadesProductos[index], "", ""]);
+          // Crear un arreglo con los datos de los productos
+          const datosProductos = nombresProductos.map((nombre, index) => [index + 1, nombre, cantidadesProductos[index], "", ""]);
 
-        // Agregar los datos de los productos al worksheet
-        XLSX.utils.sheet_add_aoa(worksheet, datosProductos, { origin: -1 });
+          // Agregar los datos de los productos al worksheet
+          XLSX.utils.sheet_add_aoa(worksheet, datosProductos, { origin: -1 });
 
-        // Agregar el worksheet al workbook
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Productos');
+          // Agregar el worksheet al workbook
+          XLSX.utils.book_append_sheet(workbook, worksheet, 'Productos');
 
-        // Guardar el archivo Excel
-        const fechaArchivo = new Date().toISOString().slice(0, 10);
-        const nombreArchivo = `Factura, ${codigoFactura} Fecha ,${fechaArchivo}.xlsx`;
-        XLSX.writeFile(workbook, nombreArchivo);
+          // Guardar el archivo Excel
+          const fechaArchivo = new Date().toISOString().slice(0, 10);
+          const nombreArchivo = `Factura, ${codigoFactura} Fecha ,${fechaArchivo}.xlsx`;
+          XLSX.writeFile(workbook, nombreArchivo);
+        } else {
+      // El formulario no es válido, puedes mostrar un mensaje de error o realizar alguna otra acción
+      console.log("Formulario inválido. No se ejecutará la función.");
+      }
       }
 
     </script>
