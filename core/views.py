@@ -399,8 +399,9 @@ def Alerta(request):
 
 def Filtrar_fecha(request):
     query_fecha = request.POST['query_fecha']
+    query_cliente = request.POST['query_nombre']
     productos = Producto.objects.all()
-    ventas = Venta.objects.filter(fecha_compra__icontains=query_fecha)
+    ventas = Venta.objects.filter(fecha_compra__icontains=query_fecha, cliente__nombre__icontains=query_cliente).order_by('-fecha_compra')
     Clientes_list = clientes.objects.all() # esto es para cargar los datos de los clientes a la venta 
     detalles_ventas = []
     for venta in ventas:

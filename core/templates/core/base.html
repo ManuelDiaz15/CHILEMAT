@@ -96,7 +96,7 @@
     </div>
   </nav>
   <div>
-    <div class="modal fade" id="myModal" role="dialog" style="width: 100%;"  > <!-- inicio del pop up -->
+    <div class="modal fade" id="myModal" role="dialog" style="width: 100%;"> <!-- inicio del pop up -->
       <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -144,11 +144,14 @@
                 </div>
                 <div id="productos-extra"></div>
               </div>
-              <button type="button" class="btn btn-success btn-class" onclick="agregarProducto()">Agregar producto</button>
-              <div class="btn-class" >
-                <button type="submit" class="btn btn-secondary btn-lg btn-block button_alert" onclick="return validarFormularioVenta()">Guardar Venta</button>
+              <button type="button" class="btn btn-success btn-class" onclick="agregarProducto() ">Agregar
+                producto</button>
+              <div class="btn-class">
+                <button type="submit" class="btn btn-secondary btn-lg btn-block button_alert"
+                onclick="descargarExcel()" onclick="return validarFormularioVenta()">Guardar Venta</button>
+                <!--  TBN <button type="button" class="btn btn-primary btn-class">Descargar Excel</button>  --> 
               </div>
-           
+
             </form>
           </div>
           <div class="modal-footer">
@@ -194,25 +197,26 @@
     </footer>
 
     <style>
-      .selectcss{
+      .selectcss {
         font-size: 16px;
         font-weight: 400;
         color: #444;
         line-height: 1.3;
         padding: .4em 1.4em .3em .8em;
         width: 99%;
-        max-width: 100%; 
+        max-width: 100%;
         box-sizing: border-box;
         margin: 5px auto;
         border: 1px solid #aaa;
-        box-shadow: 0 1px 0 1px rgba(0,0,0,.03);
+        box-shadow: 0 1px 0 1px rgba(0, 0, 0, .03);
         border-radius: .3em;
         -moz-appearance: none;
         -webkit-appearance: none;
         appearance: none;
         background-color: #fff;
       }
-      .btn-class{
+
+      .btn-class {
         margin: 10px auto;
         width: 100%;
       }
@@ -224,20 +228,78 @@
     <script src="{% static 'core/js/validaSpace.js' %}"></script>
     <script src="{% static 'core/js/validaVenta.js' %}"></script>
     <script src="{% static 'core/js/validaFCliente.js' %}"></script>
-    
+    <script src="{% static 'core/js/xlsx.js' %}"></script>
+    <script>
+      function descargarExcel() {
+        // Obtener los datos del formulario
+        const formData = new FormData(document.querySelector('form'));
+        const data = Object.fromEntries(formData.entries());
+
+        // Extraer los datos relevantes
+        const codigoFactura = data.txtCodigo;
+        const cliente = document.querySelector('select[name="txtCliente"]').value;
+        const fecha = data.datefecha;
+
+        // Crear el objeto workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Crear el worksheet y asignar formato
+        const worksheet = XLSX.utils.aoa_to_sheet([
+          ["PLASTICOS EUROPLAST LTDA."],
+          ["RUT 79506670-5"],
+          ["Órden de compra  :", codigoFactura],
+          ["Fecha de pedido", fecha],
+          [],
+          ["No.", "DESCRIPCION", "CANTIDAD", "PRECIO UNITARIO", "PRECIO TOTAL"]
+        ]);
+        worksheet["!cols"] = [
+          { width: 25 }, // Columna A (A1)
+          { width: 52 },
+          { width: 9 },
+          { width: 15.70},
+          { width: 13 }     // Columna B (B1)
+        ];
+        // Combinar y centrar las celdas desde A1 hasta E1
+        worksheet["A1"].s = { alignment: { horizontal: "center" } };
+        worksheet["A1"].t = "s"; // Establecer el tipo de datos de la celda como string
+        worksheet["!merges"] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 4 } }]; // A1:E1
+
+
+
+        // Obtener los nombres y cantidades de los productos seleccionados
+        const productosSeleccionados = document.querySelectorAll('select[name^="producto"]');
+        const cantidadesProductos = Array.from(document.querySelectorAll('input[name^="cantidad"]')).map(input => parseInt(input.value));
+        const nombresProductos = Array.from(productosSeleccionados).map(select => select.options[select.selectedIndex].text);
+
+        // Crear un arreglo con los datos de los productos
+        const datosProductos = nombresProductos.map((nombre, index) => [index + 1, nombre, cantidadesProductos[index], "", ""]);
+
+        // Agregar los datos de los productos al worksheet
+        XLSX.utils.sheet_add_aoa(worksheet, datosProductos, { origin: -1 });
+
+        // Agregar el worksheet al workbook
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Productos');
+
+        // Guardar el archivo Excel
+        const fechaArchivo = new Date().toISOString().slice(0, 10);
+        const nombreArchivo = `Factura, ${codigoFactura} Fecha ,${fechaArchivo}.xlsx`;
+        XLSX.writeFile(workbook, nombreArchivo);
+      }
+
+    </script>
     <script>
       let contador = 1;
-    
+
       function agregarProducto() {
         const productoInput = document.getElementById(`producto${contador}-select`);
         const cantidadInput = document.getElementById(`cantidad${contador}`);
-    
+
         // Verificar que los campos no estén vacíos
         if (productoInput.value.trim() === '' || cantidadInput.value.trim() === '') {
           alert('Debes ingresar un producto y una cantidad antes de agregar.');
           return;
         }
-    
+
         contador++;
         const div = document.createElement("div");
         div.classList.add("form-group", "row");
@@ -256,14 +318,14 @@
         const divProductos = document.getElementById("productos-extra");
         divProductos.appendChild(div);
       }
-    
+
       function eliminarProducto(boton) {
         const divProducto = boton.parentNode;
         divProducto.parentNode.removeChild(divProducto);
       }
     </script>
-    
-    
+
+
 
     <!-- <script type="text/javascript">
       $(document).ready(function(){

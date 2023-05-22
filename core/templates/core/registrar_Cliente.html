@@ -37,16 +37,16 @@
   </div>
   <hr class="col-xl-12">
   <div class="col-xl-12">
-    <form method="post" class="form-inline" onsubmit="return validarBuscadores()" action="{% url 'search_results' %}" style="padding: 15px;">
+    <form method="post" class="form-inline text-center" onsubmit="return validarBuscadores()" action="{% url 'search_results' %}" style="padding: 15px;">
       {% csrf_token %}
-      <h6 >Nombre Cliente </h6>
-      <div class="form-group mx-sm-3 ">
+      <h6>Nombre Cliente</h6>
+      <div class="form-group mx-sm-3">
         <input type="text" class="form-control" name="query_nombre" placeholder="Nombre cliente">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit">Buscar</button>
         </div>
       </div>
-      <h6>Rut Cliente </h6>
+      <h6>Rut Cliente</h6>
       <div class="form-group mx-sm-3">
         <input type="text" class="form-control" name="query_rut" placeholder="Rut Cliente">
         <div class="input-group-append">
@@ -54,6 +54,7 @@
         </div>
       </div>
     </form>
+    
 
     <div class="col-xl-12">
       <form method="post" class="form-inline" action="{% url 'search_results' %}" style="padding: 15px;">
