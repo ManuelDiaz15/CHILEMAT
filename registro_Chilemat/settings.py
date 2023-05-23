@@ -76,15 +76,10 @@ WSGI_APPLICATION = 'registro_Chilemat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'ControlMayorista.mysql.pythonanywhere-services.com',
-        'USER': 'ControlMayorista',
-        'PASSWORD': 'Portafolio001D',
-        'NAME': 'ControlMayorista$default',
-        'CHARSET': 'utf8',
-    },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'registro_Chilemat.db',
+    }
 }
-
 
 
 # Password validation
