@@ -76,10 +76,15 @@ WSGI_APPLICATION = 'registro_Chilemat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'registro_Chilemat.db',
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'ChilematMayorista.mysql.pythonanywhere-services.com',
+        'USER': 'ChilematMayorist',
+        'PASSWORD': 'Portafolio001D',
+        'NAME': 'ChilematMayorist$default',
+        'CHARSET': 'utf8',
+    },
 }
+
 
 
 # Password validation
@@ -123,3 +128,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+MEDIA_URL = '/media/'
+STATIC_ROOT = Path(BASE_DIR / 'static')
+MEDIA_ROOT = Path(BASE_DIR / 'media')
