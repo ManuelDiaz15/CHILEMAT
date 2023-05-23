@@ -138,7 +138,7 @@
                     {% endfor %}
                   </select>
                   <label for="cantidad1" class="col-3">Cantidad</label>
-                  <input type="number" name="cantidad1" id="cantidad1" class="form-control col-3.5">
+                  <input type="number" name="cantidad1" id="cantidad1" class="form-control col-3.5" required>
                   <div style="padding-top: 8px;">
                   </div>
                 </div>
@@ -147,8 +147,12 @@
               <button type="button" class="btn btn-success btn-class" onclick="agregarProducto() ">Agregar
                 producto</button>
               <div class="btn-class">
+                <button type="button" class="btn btn-secondary btn-lg btn-block button_alert"
+                onclick="descargarExcel(); return validarFormularioVenta(); ">Descargar Excel
+                <i class="fa-solid fa-file-excel fa-beat-fade fa-xl" style="color: #5ee868; margin-left: 15px;"></i>
+                </button>
                 <button type="submit" class="btn btn-secondary btn-lg btn-block button_alert"
-                onclick="descargarExcel()" onclick="return validarFormularioVenta()">Guardar Venta</button>
+                onclick="return validarFormularioVenta()">Guardar Venta</button>
                 <!--  TBN <button type="button" class="btn btn-primary btn-class">Descargar Excel</button>  --> 
               </div>
 
@@ -320,7 +324,7 @@
               {% endfor %}
           </select>
           <label for="cantidad${contador}" class="col-3">Cantidad</label>
-          <input type="number" name="cantidad${contador}" id="cantidad${contador}" class="form-control col-3.5">
+          <input type="number" name="cantidad${contador}" id="cantidad${contador}" class="form-control col-3.5" required>
           <button type="button" class="btn btn-danger btn-class" onclick="eliminarProducto(this)">Eliminar</button>
       `;
         const divProductos = document.getElementById("productos-extra");
